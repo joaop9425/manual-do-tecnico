@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const allNews = await getCollection("noticias");
+    const categories = [...new Set(allNews.map((n) => n.data.category))];
+
+    return categories.map((category) => ({
+        params: { category },
+        props: {
+            category,
+            news: allNews.filter((n) => n.data.category === category),
+        },
+    }));
+}
+
+const { category, news } = Astro.props;
+const sortedNews = news.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+
+<BaseLayout title={`Notícias :: ${category.toUpperCase()}`}>
+    <div className="mb-16">
+        <div
+            className="text-xs font-bold text-brand-600 uppercase tracking-widest mb-4"
+        >
+            <a href="/noticias" className="hover:underline">Feed</a> / Assunto
+        </div>
+        <h1
+            className="text-4xl md:text-5xl font-bold text-surface-950 tracking-tight"
+        >
+            Novidades em {category.charAt(0).toUpperCase() + category.slice(1)}
+        </h1>
+    </div>
+
+    <div className="max-w-3xl space-y-20">
+        {
+            sortedNews.map((item) => (
+                <article className="group">
+                    <div className="flex flex-col md:flex-row gap-8">
+                        <div className="flex-shrink-0 w-full md:w-16 flex flex-col items-center">
+                            <span className="text-3xl font-bold text-surface-300 group-hover:text-brand-500 transition-colors tracking-tighter">
+                                {item.data.pubDate
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, "0")}
+                            </span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-surface-400">
+                                {item.data.pubDate.toLocaleDateString("pt-BR", {
+                                    month: "short",
+                                })}
+                            </span>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[10px] font-bold bg-surface-100 text-surface-500 px-2 py-1 rounded tracking-widest uppercase">
+                                    {item.data.source}
+                                </span>
+                            </div>
+
+                            <h2 className="text-2xl font-bold text-surface-950 group-hover:text-brand-500 transition-colors leading-snug">
+                                <a href={item.data.sourceUrl} target="_blank">
+                                    {item.data.title}
+                                </a>
+                            </h2>
+
+                            <p className="text-surface-600 leading-relaxed line-clamp-3">
+                                {item.data.excerpt}
+                            </p>
+
+                            <div className="pt-4 flex items-center gap-6">
+                                <a
+                                    href={`/noticias/${item.slug}`}
+                                    className="text-xs font-bold text-surface-950 border-b-2 border-surface-950 hover:text-brand-500 hover:border-brand-500 transition-all pb-1 uppercase tracking-wider"
+                                >
+                                    Ler Local
+                                </a>
+                                <a
+                                    href={item.data.sourceUrl}
+                                    target="_blank"
+                                    className="text-xs font-bold text-surface-400 hover:text-brand-500 transition-all uppercase tracking-wider"
+                                >
+                                    Ver Fonte &nearr;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            ))
+        }
+    </div>
+</BaseLayout>

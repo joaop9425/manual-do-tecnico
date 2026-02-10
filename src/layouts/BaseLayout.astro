@@ -1,0 +1,128 @@
+---
+const { title = "Manual do Técnico" } = Astro.props;
+---
+
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body
+        class="bg-surface-50 text-surface-900 font-sans min-h-screen selection:bg-brand-100 selection:text-brand-900"
+    >
+        <!-- NAVIGATION -->
+        <header
+            class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-200"
+        >
+            <div
+                class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between"
+            >
+                <a href="/" class="flex items-center gap-2 group">
+                    <div
+                        class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform"
+                    >
+                        M
+                    </div>
+                    <span
+                        class="font-bold text-xl tracking-tight text-surface-950"
+                        >Manual<span class="text-brand-500">do</span
+                        >Técnico</span
+                    >
+                </a>
+
+                <nav
+                    class="hidden md:flex items-center gap-8 font-medium text-sm text-surface-600"
+                >
+                    <a
+                        href="/conteudos"
+                        class="hover:text-brand-500 transition-colors"
+                        >Conteúdos</a
+                    >
+                    <a
+                        href="/noticias"
+                        class="hover:text-brand-500 transition-colors"
+                        >Notícias</a
+                    >
+                    <a
+                        href="/ferramentas"
+                        class="hover:text-brand-500 transition-colors"
+                        >Ferramentas</a
+                    >
+                </nav>
+
+                <div class="md:hidden">
+                    <!-- Mobile Menu Trigger -->
+                    <button class="p-2 text-surface-600">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="max-w-5xl mx-auto px-6 py-12 md:py-20 lg:py-24">
+            <slot />
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-white border-t border-surface-200 py-16">
+            <div
+                class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12"
+            >
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-surface-950">
+                        Manual do Técnico
+                    </h3>
+                    <p class="text-sm text-surface-500 max-w-xs">
+                        Base de conhecimento e ferramentas para profissionais de
+                        TI e entusiastas de hardware.
+                    </p>
+                </div>
+                <div>
+                    <h4
+                        class="font-bold text-sm uppercase tracking-wider text-surface-400 mb-6"
+                    >
+                        Links Rápidos
+                    </h4>
+                    <ul class="space-y-3 text-sm text-surface-600">
+                        <li>
+                            <a href="/conteudos" class="hover:text-brand-500"
+                                >Conteúdos</a>
+                        </li>
+                        <li>
+                            <a href="/noticias" class="hover:text-brand-500"
+                                >Notícias</a>
+                        </li>
+                        <li>
+                            <a href="/ferramentas" class="hover:text-brand-500"
+                                >Ferramentas</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-sm text-surface-500">
+                    <p>&copy; {new Date().getFullYear()} Manual do Técnico.</p>
+                    <p class="mt-2 text-xs">Criado com Astro + React.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

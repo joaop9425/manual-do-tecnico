@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const allNews = await getCollection("noticias");
+    return allNews.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title}>
+    <article class="max-w-2xl mx-auto">
+        <header class="mb-12">
+            <div
+                class="flex items-center gap-4 text-xs font-bold text-brand-600 uppercase tracking-widest mb-6"
+            >
+                <a href="/noticias" class="hover:underline">Notícias</a>
+                <span>/</span>
+                <span>{entry.data.source}</span>
+            </div>
+            <h1
+                class="text-3xl md:text-4xl font-bold text-surface-950 tracking-tight leading-tight mb-6"
+            >
+                {entry.data.title}
+            </h1>
+            <div class="text-sm text-surface-400 font-medium">
+                Publicado em {
+                    entry.data.pubDate.toLocaleDateString("pt-BR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                    })
+                }
+            </div>
+        </header>
+
+        <div
+            class="prose prose-slate max-w-none
+                prose-p:text-surface-600 prose-p:leading-relaxed
+                prose-a:text-brand-500 prose-a:font-semibold"
+        >
+            <div
+                class="bg-surface-50 border border-surface-200 rounded-2xl p-6 md:p-8 mb-10"
+            >
+                <Content />
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a
+                href={entry.data.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 text-white font-bold rounded-xl hover:bg-brand-600 transition-all shadow-clean"
+            >
+                Ler Artigo Completo na Fonte
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+    </article>
+</BaseLayout>
