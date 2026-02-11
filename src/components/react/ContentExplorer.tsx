@@ -17,9 +17,10 @@ interface ContentItem {
 interface Props {
     initialContent: ContentItem[];
     availableCategories: string[];
+    base?: string;
 }
 
-export default function ContentExplorer({ initialContent, availableCategories }: Props) {
+export default function ContentExplorer({ initialContent, availableCategories, base = '' }: Props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -58,8 +59,8 @@ export default function ContentExplorer({ initialContent, availableCategories }:
                         <button
                             onClick={() => setSelectedCategory(null)}
                             className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all uppercase tracking-widest ${selectedCategory === null
-                                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
-                                    : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
+                                ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
+                                : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
                                 }`}
                         >
                             Todos
@@ -69,8 +70,8 @@ export default function ContentExplorer({ initialContent, availableCategories }:
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
                                 className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all uppercase tracking-widest ${selectedCategory === cat
-                                        ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
-                                        : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
+                                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
+                                    : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
                                     }`}
                             >
                                 {cat}
@@ -85,13 +86,13 @@ export default function ContentExplorer({ initialContent, availableCategories }:
                 {filteredContent.map((item) => (
                     <a
                         key={item.id}
-                        href={`/conteudos/${item.slug}`}
+                        href={`${base}conteudos/${item.slug}`}
                         className="group flex flex-col bg-white rounded-3xl border border-surface-100 overflow-hidden hover:shadow-2xl hover:shadow-brand-500/10 hover:-translate-y-1 transition-all duration-300"
                     >
                         {item.data.image && (
                             <div className="aspect-video overflow-hidden border-b border-surface-50">
                                 <img
-                                    src={item.data.image}
+                                    src={item.data.image.startsWith('http') ? item.data.image : `${base}${item.data.image.startsWith('/') ? item.data.image.slice(1) : item.data.image}`}
                                     alt={item.data.title}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />

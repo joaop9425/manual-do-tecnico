@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-export default function CookieConsent() {
+interface Props {
+    base?: string;
+}
+
+export default function CookieConsent({ base = '' }: Props) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -33,7 +37,7 @@ export default function CookieConsent() {
 
                     <p className="text-sm text-surface-600 leading-relaxed">
                         Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa
-                        <a href="/privacidade" className="text-brand-600 font-bold hover:underline mx-1">Política de Privacidade</a>.
+                        <a href={`${base}privacidade`} className="text-brand-600 font-bold hover:underline mx-1">Política de Privacidade</a>.
                     </p>
 
                     <div className="flex items-center gap-3 pt-2">

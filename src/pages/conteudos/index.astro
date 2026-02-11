@@ -8,6 +8,7 @@ const categories = [...new Set(allContent.map((c) => c.data.category))].sort();
 const sortedContent = allContent.sort(
   (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
 );
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
@@ -30,5 +31,6 @@ const sortedContent = allContent.sort(
     client:load
     initialContent={sortedContent}
     availableCategories={categories}
+    base={base}
   />
 </BaseLayout>
