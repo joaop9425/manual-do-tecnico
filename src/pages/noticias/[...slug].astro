@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={entry.data.title}>
@@ -20,7 +21,7 @@ const { Content } = await entry.render();
             <div
                 class="flex items-center gap-4 text-xs font-bold text-brand-600 uppercase tracking-widest mb-6"
             >
-                <a href="/noticias" class="hover:underline">Notícias</a>
+                <a href={`${base}noticias`} class="hover:underline">Notícias</a>
                 <span>/</span>
                 <span>{entry.data.source}</span>
             </div>

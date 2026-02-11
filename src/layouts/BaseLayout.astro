@@ -20,6 +20,8 @@ const {
     ).href,
     googleAnalyticsId = "" // Adicione seu ID aqui futuramente (ex: G-XXXXXXXXXX)
 } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -40,11 +42,11 @@ const {
         <!-- Global Metadata -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" sizes="any" />
+        <link rel="shortcut icon" href={`${base}favicon.svg`} type="image/svg+xml" />
         <meta name="generator" content={Astro.generator} />
         <meta name="theme-color" content="#2563eb" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href={`${base}site.webmanifest`} />
 
         <!-- Canonical URL -->
         <link rel="canonical" href={canonicalURL} />
@@ -108,7 +110,7 @@ const {
                 id="header-container"
             >
                 <a
-                    href="/"
+                    href={`${base}`}
                     class="flex items-center gap-2 md:gap-3 group relative z-[210]"
                 >
                     <div
@@ -134,17 +136,17 @@ const {
                     class="hidden md:flex items-center gap-1 bg-surface-100/50 p-1.5 rounded-2xl border border-surface-200/50"
                 >
                     <a
-                        href="/conteudos"
+                        href={`${base}conteudos`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Conteúdos</a
                     >
                     <a
-                        href="/noticias"
+                        href={`${base}noticias`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Notícias</a
                     >
                     <a
-                        href="/ferramentas"
+                        href={`${base}ferramentas`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Ferramentas</a
                     >
@@ -202,17 +204,17 @@ const {
                 >
                 <nav class="flex flex-col">
                     <a
-                        href="/conteudos"
+                        href={`${base}conteudos`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Conteúdos</a
                     >
                     <a
-                        href="/noticias"
+                        href={`${base}noticias`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Notícias</a
                     >
                     <a
-                        href="/ferramentas"
+                        href={`${base}ferramentas`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Ferramentas</a
                     >
@@ -327,12 +329,11 @@ const {
         </script>
 
         <!-- MAIN -->
-        <main class="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-16">
+        <main class="flex-grow pt-24 md:pt-32">
             <slot />
         </main>
 
-        <!-- COOKIE CONSENT -->
-        <CookieConsent client:load />
+        <CookieConsent client:load base={base} />
 
         <!-- FOOTER -->
         <footer
@@ -371,14 +372,14 @@ const {
                     <ul class="space-y-4 text-sm font-medium">
                         <li>
                             <a
-                                href="/conteudos"
+                                href={`${base}conteudos`}
                                 class="text-surface-300 hover:text-brand-500 transition-colors"
                                 >Conteúdos</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/noticias"
+                                href={`${base}noticias`}
                                 class="text-surface-300 hover:text-brand-500 transition-colors"
                                 >Notícias</a
                             >
@@ -414,10 +415,10 @@ const {
                 <div
                     class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-surface-500"
                 >
-                    <a href="/privacidade" class="hover:text-white transition-colors"
+                    <a href={`${base}privacidade`} class="hover:text-white transition-colors"
                         >Privacidade</a
                     >
-                    <a href="/termos" class="hover:text-white transition-colors"
+                    <a href={`${base}termos`} class="hover:text-white transition-colors"
                         >Termos de Uso</a
                     >
                 </div>

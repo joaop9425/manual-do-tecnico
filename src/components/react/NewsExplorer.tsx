@@ -18,9 +18,10 @@ interface NewsItem {
 interface Props {
     initialNews: NewsItem[];
     availableCategories: string[];
+    base?: string;
 }
 
-export default function NewsExplorer({ initialNews, availableCategories }: Props) {
+export default function NewsExplorer({ initialNews, availableCategories, base = '' }: Props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -60,8 +61,8 @@ export default function NewsExplorer({ initialNews, availableCategories }: Props
                         <button
                             onClick={() => setSelectedCategory(null)}
                             className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all uppercase tracking-widest ${selectedCategory === null
-                                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
-                                    : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
+                                ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
+                                : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
                                 }`}
                         >
                             Todos
@@ -71,8 +72,8 @@ export default function NewsExplorer({ initialNews, availableCategories }: Props
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
                                 className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all uppercase tracking-widest ${selectedCategory === cat
-                                        ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
-                                        : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
+                                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
+                                    : 'bg-white border border-surface-200 text-surface-500 hover:border-brand-200'
                                     }`}
                             >
                                 {cat}
@@ -111,7 +112,7 @@ export default function NewsExplorer({ initialNews, availableCategories }: Props
 
                             <div className="flex-grow">
                                 <h2 className="text-lg md:text-xl font-bold text-surface-950 group-hover:text-brand-600 transition-colors leading-tight mb-4 tracking-tight">
-                                    <a href={`/noticias/${item.slug}`}>
+                                    <a href={`${base}noticias/${item.slug}`}>
                                         {item.data.title}
                                     </a>
                                 </h2>
@@ -122,7 +123,7 @@ export default function NewsExplorer({ initialNews, availableCategories }: Props
 
                             <div className="mt-8 pt-6 border-t border-surface-100 flex items-center justify-between">
                                 <a
-                                    href={`/noticias/${item.slug}`}
+                                    href={`${base}noticias/${item.slug}`}
                                     className="inline-flex items-center gap-2 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors uppercase tracking-widest"
                                 >
                                     Documentação Local
