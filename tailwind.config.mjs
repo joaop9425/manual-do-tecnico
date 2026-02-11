@@ -32,7 +32,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['"Inter"', '"Outfit"', 'system-ui', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        display: ['"Outfit"', 'system-ui', 'sans-serif'],
         mono: ['"Fira Code"', 'monospace'],
       },
       borderRadius: {

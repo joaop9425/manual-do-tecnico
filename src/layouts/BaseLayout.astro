@@ -13,15 +13,18 @@ interface Props {
 const {
     title = "Manual do Técnico :: Hub de Conhecimento e Notícias para Profissionais de TI",
     description = "A maior base de conhecimento para técnicos de hardware e TI no Brasil. Encontre manuais, guias de reparo, notícias atualizadas e ferramentas essenciais para a sua bancada.",
-    image = "/og-image.png",
+    image = "og-image.png",
     canonicalURL = new URL(
         Astro.url.pathname,
-        Astro.site || "https://manualdotecnico.com.br",
+        Astro.site || "https://joaop9425.github.io/manual-do-tecnico/",
     ).href,
-    googleAnalyticsId = "G-HPQ56VY5Y1" // Adicione seu ID aqui futuramente (ex: G-XXXXXXXXXX)
+    googleAnalyticsId = "G-HPQ56VY5Y1"
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+const site = Astro.site || "https://joaop9425.github.io/manual-do-tecnico/";
+const cleanImage = image.startsWith('/') ? image.slice(1) : image;
+const ogImageUrl = new URL(`${base}${cleanImage}`, site).href;
 ---
 
 <!doctype html>
@@ -35,7 +38,7 @@ const base = import.meta.env.BASE_URL;
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', `${googleAnalyticsId}`);
+                    gtag('config', 'G-HPQ56VY5Y1');
                 </script>
             </>
         )}
@@ -61,14 +64,14 @@ const base = import.meta.env.BASE_URL;
         <meta property="og:url" content={Astro.url} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={new URL(image, Astro.url)} />
+        <meta property="og:image" content={ogImageUrl} />
 
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={Astro.url} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={new URL(image, Astro.url)} />
+        <meta property="twitter:image" content={ogImageUrl} />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -110,7 +113,7 @@ const base = import.meta.env.BASE_URL;
                 id="header-container"
             >
                 <a
-                    href={`${base}`}
+                    href={base}
                     class="flex items-center gap-2 md:gap-3 group relative z-[210]"
                 >
                     <div
@@ -136,17 +139,17 @@ const base = import.meta.env.BASE_URL;
                     class="hidden md:flex items-center gap-1 bg-surface-100/50 p-1.5 rounded-2xl border border-surface-200/50"
                 >
                     <a
-                        href={`${base}conteudos`}
+                        href={`${base}conteudos/`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Conteúdos</a
                     >
                     <a
-                        href={`${base}noticias`}
+                        href={`${base}noticias/`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Notícias</a
                     >
                     <a
-                        href={`${base}ferramentas`}
+                        href={`${base}ferramentas/`}
                         class="px-5 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest text-surface-500 hover:text-brand-600 hover:bg-white hover:shadow-sm transition-all"
                         >Ferramentas</a
                     >
@@ -204,17 +207,17 @@ const base = import.meta.env.BASE_URL;
                 >
                 <nav class="flex flex-col">
                     <a
-                        href={`${base}conteudos`}
+                        href={`${base}conteudos/`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Conteúdos</a
                     >
                     <a
-                        href={`${base}noticias`}
+                        href={`${base}noticias/`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Notícias</a
                     >
                     <a
-                        href={`${base}ferramentas`}
+                        href={`${base}ferramentas/`}
                         class="text-5xl font-black text-surface-950 p-3 hover:text-brand-600 transition-colors uppercase tracking-tighter"
                         >Ferramentas</a
                     >
@@ -329,7 +332,7 @@ const base = import.meta.env.BASE_URL;
         </script>
 
         <!-- MAIN -->
-        <main class="flex-grow pt-24 md:pt-32">
+        <main class="flex-grow pt-24 md:pt-32 max-w-6xl mx-auto px-4 md:px-8 w-full">
             <slot />
         </main>
 
@@ -372,14 +375,14 @@ const base = import.meta.env.BASE_URL;
                     <ul class="space-y-4 text-sm font-medium">
                         <li>
                             <a
-                                href={`${base}conteudos`}
+                                href={`${base}conteudos/`}
                                 class="text-surface-300 hover:text-brand-500 transition-colors"
                                 >Conteúdos</a
                             >
                         </li>
                         <li>
                             <a
-                                href={`${base}noticias`}
+                                href={`${base}noticias/`}
                                 class="text-surface-300 hover:text-brand-500 transition-colors"
                                 >Notícias</a
                             >
@@ -415,10 +418,10 @@ const base = import.meta.env.BASE_URL;
                 <div
                     class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-surface-500"
                 >
-                    <a href={`${base}privacidade`} class="hover:text-white transition-colors"
+                    <a href={`${base}privacidade/`} class="hover:text-white transition-colors"
                         >Privacidade</a
                     >
-                    <a href={`${base}termos`} class="hover:text-white transition-colors"
+                    <a href={`${base}termos/`} class="hover:text-white transition-colors"
                         >Termos de Uso</a
                     >
                 </div>

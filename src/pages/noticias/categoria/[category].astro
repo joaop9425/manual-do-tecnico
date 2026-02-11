@@ -19,15 +19,16 @@ const { category, news } = Astro.props;
 const sortedNews = news.sort(
     (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`Notícias de ${category.charAt(0).toUpperCase() + category.slice(1)} :: Manual do Técnico`}>
     <!-- HERO SECTION -->
     <header class="mb-16 border-l-4 border-brand-500 pl-6 py-2">
         <nav class="flex items-center gap-2 text-[10px] font-bold text-surface-400 uppercase tracking-widest mb-4">
-            <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
+            <a href={`${base}`} class="hover:text-brand-500 transition-colors">Home</a>
             <span>/</span>
-            <a href="/noticias" class="hover:text-brand-500 transition-colors">Notícias</a>
+            <a href={`${base}noticias`} class="hover:text-brand-500 transition-colors">Notícias</a>
             <span>/</span>
             <span class="text-brand-500">{category}</span>
         </nav>
@@ -69,7 +70,7 @@ const sortedNews = news.sort(
                         <!-- CONTENT -->
                         <div class="flex-grow">
                             <h2 class="text-xl font-bold text-surface-950 group-hover:text-brand-600 transition-colors leading-tight mb-4 font-display">
-                                <a href={`/noticias/${item.slug}`}>
+                                <a href={`${base}noticias/${item.slug}`}>
                                     {item.data.title}
                                 </a>
                             </h2>
@@ -82,7 +83,7 @@ const sortedNews = news.sort(
                         <!-- ACTIONS -->
                         <div class="mt-8 pt-6 border-t border-surface-100 flex items-center justify-between">
                             <a
-                                href={`/noticias/${item.slug}`}
+                                href={`${base}noticias/${item.slug}`}
                                 class="inline-flex items-center gap-2 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors uppercase tracking-wider"
                             >
                                 Ler Local 
@@ -106,7 +107,7 @@ const sortedNews = news.sort(
     {sortedNews.length === 0 && (
         <div class="py-20 text-center bg-surface-50 rounded-3xl border-2 border-dashed border-surface-200">
             <p class="text-surface-400 font-medium">Nenhuma notícia encontrada nesta categoria.</p>
-            <a href="/noticias" class="mt-4 inline-block text-brand-500 font-bold hover:underline">Voltar para o Feed Geral</a>
+            <a href={`${base}noticias`} class="mt-4 inline-block text-brand-500 font-bold hover:underline">Voltar para o Feed Geral</a>
         </div>
     )}
 </BaseLayout>

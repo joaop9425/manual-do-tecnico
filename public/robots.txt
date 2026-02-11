@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://manualdotecnico.com.br/sitemap-index.xml
+Sitemap: https://joaop9425.github.io/manual-do-tecnico/sitemap-index.xml

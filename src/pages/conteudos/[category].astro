@@ -21,6 +21,7 @@ const { category, posts } = Astro.props as { category: string; posts: any[] };
 const sortedPosts = posts.sort(
     (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`Conteúdos :: ${category.toUpperCase()}`}>
@@ -28,7 +29,7 @@ const sortedPosts = posts.sort(
         <div
             class="text-xs font-bold text-brand-600 uppercase tracking-widest mb-4"
         >
-            <a href="/conteudos" class="hover:underline">Seções</a> / Categoria
+            <a href={`${base}conteudos`} class="hover:underline">Seções</a> / Categoria
         </div>
         <h1
             class="text-4xl md:text-5xl font-bold text-surface-950 tracking-tight"
@@ -42,7 +43,7 @@ const sortedPosts = posts.sort(
             posts.map((content) => (
                 <article class="group">
                     <a
-                        href={`/conteudos/${content.slug}`}
+                        href={`${base}conteudos/${content.slug}`}
                         class="block space-y-4"
                         target="_blank"
                     >
