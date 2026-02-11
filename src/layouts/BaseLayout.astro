@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL;
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', googleAnalyticsId);
+                    gtag('config', `${googleAnalyticsId}`);
                 </script>
             </>
         )}
@@ -426,4 +426,5 @@ const base = import.meta.env.BASE_URL;
         </footer>
     </body>
 </html>
+
 
