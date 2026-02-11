@@ -6,5 +6,7 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   site: 'https://joaop9425.github.io',
   base: '/manual-do-tecnico',
+  output: 'static',
   integrations: [react(), tailwind()]
 });
+
