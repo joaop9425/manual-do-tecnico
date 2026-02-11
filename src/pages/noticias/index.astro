@@ -1,106 +1,37 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsExplorer from "../../components/react/NewsExplorer";
 
 const allNews = await getCollection("noticias");
-const categories = [...new Set(allNews.map((n) => n.data.category))];
+const categories = [...new Set(allNews.map((n) => n.data.category))].sort();
 const sortedNews = allNews.sort(
     (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
 ---
 
-<BaseLayout title="Notícias :: Feed Técnico">
-    <div class="mb-16">
+<BaseLayout
+    title="Feed de Notícias TI & Hardware :: Manual do Técnico"
+    description="Fique por dentro das últimas notícias sobre hardware, software, cibersegurança e tendências do mercado de tecnologia. Feed atualizado em tempo real. Acompanhe os principais portais em um só lugar."
+>
+    <!-- HERO SECTION -->
+    <header class="mb-12">
         <h1
-            class="text-4xl md:text-5xl font-bold text-surface-950 tracking-tight mb-4"
+            class="text-4xl md:text-6xl font-bold text-surface-950 tracking-tight font-display mb-6"
         >
             Feed de Notícias
         </h1>
-        <p class="text-surface-600 text-lg max-w-2xl leading-relaxed">
-            Agregação das fontes mais confiáveis de tecnologia, filtradas pela
-            nossa equipe técnica.
+        <p class="text-lg text-surface-600 max-w-2xl leading-relaxed">
+            Nossa curadoria técnica traz as informações mais relevantes do
+            ecossistema de TI, agregadas e filtradas para manter você atualizado
+            com o que realmente importa.
         </p>
-    </div>
+    </header>
 
-    <!-- CATEGORY FILTER -->
-    <div class="flex flex-wrap gap-4 mb-16 pb-8 border-b border-surface-200">
-        <a
-            href="/noticias"
-            class="px-5 py-2.5 rounded-full text-sm font-semibold bg-brand-500 text-white shadow-clean"
-        >
-            Feed Geral
-        </a>
-        {
-            categories.map((cat) => (
-                <a
-                    href={`/noticias/categoria/${cat}`}
-                    class="px-5 py-2.5 rounded-full text-sm font-semibold border border-surface-200 text-surface-600 hover:bg-surface-50 hover:text-brand-500 transition-all"
-                >
-                    {cat.toUpperCase()}
-                </a>
-            ))
-        }
-    </div>
-
-    <!-- LIST VIEW -->
-    <div class="max-w-3xl space-y-20">
-        {
-            sortedNews.map((news) => (
-                <article class="group">
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <div class="flex-shrink-0 w-full md:w-16 flex flex-col items-center">
-                            <span class="text-3xl font-bold text-surface-300 group-hover:text-brand-500 transition-colors tracking-tighter">
-                                {news.data.pubDate
-                                    .getDate()
-                                    .toString()
-                                    .padStart(2, "0")}
-                            </span>
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-surface-400">
-                                {news.data.pubDate.toLocaleDateString("pt-BR", {
-                                    month: "short",
-                                })}
-                            </span>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3">
-                                <span class="text-[10px] font-bold bg-surface-100 text-surface-500 px-2 py-1 rounded tracking-widest uppercase">
-                                    {news.data.source}
-                                </span>
-                                <span class="text-[10px] font-bold text-brand-600 uppercase tracking-widest">
-                                    {news.data.category}
-                                </span>
-                            </div>
-
-                            <h2 class="text-2xl font-bold text-surface-950 group-hover:text-brand-500 transition-colors leading-snug">
-                                <a href={news.data.sourceUrl} target="_blank">
-                                    {news.data.title}
-                                </a>
-                            </h2>
-
-                            <p class="text-surface-600 leading-relaxed line-clamp-3">
-                                {news.data.excerpt}
-                            </p>
-
-                            <div class="pt-4 flex items-center gap-6">
-                                <a
-                                    href={`/noticias/${news.slug}`}
-                                    class="text-xs font-bold text-surface-950 border-b-2 border-surface-950 hover:text-brand-500 hover:border-brand-500 transition-all pb-1 uppercase tracking-wider"
-                                >
-                                    Ler Local
-                                </a>
-                                <a
-                                    href={news.data.sourceUrl}
-                                    target="_blank"
-                                    class="text-xs font-bold text-surface-400 hover:text-brand-500 transition-all uppercase tracking-wider"
-                                >
-                                    Fonte Original &nearr;
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            ))
-        }
-    </div>
+    <!-- REACT EXPLORER -->
+    <NewsExplorer
+        client:load
+        initialNews={sortedNews}
+        availableCategories={categories}
+    />
 </BaseLayout>

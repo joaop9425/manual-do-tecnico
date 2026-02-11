@@ -23,6 +23,7 @@ const noticias = defineCollection({
         sourceUrl: z.string().url(),
         pubDate: z.date(),
         category: z.enum(['windows', 'linux', 'seguranca', 'hardware', 'atualizacoes-criticas']),
+        revision: z.string().optional().default('1.0'),
         excerpt: z.string().optional(),
         tags: z.array(z.string()).optional(),
     }),

@@ -40,6 +40,10 @@
             "atualizacoes-criticas"
           ]
         },
+        "revision": {
+          "type": "string",
+          "default": "1.0"
+        },
         "excerpt": {
           "type": "string"
         },
