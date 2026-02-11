@@ -5,9 +5,9 @@ category: "software"
 tags: ["otimização", "windows", "windows 11"]
 publishDate: 2026-02-10
 author: "Lead Tech"
+youtubeUrl: "https://youtu.be/kQM-iv7TQz0"
+image: "https://i.redd.it/9c4stgxegjgf1.jpeg"
 ---
-
-[Link de referência](https://www.youtube.com/watch?si=j0cHajW2ivI1KGmW&v=kQM-iv7TQz0&feature=youtu.be)
 
 # Vai tomando
 

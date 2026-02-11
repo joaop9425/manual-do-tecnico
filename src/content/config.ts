@@ -10,6 +10,8 @@ const conteudos = defineCollection({
         publishDate: z.date(),
         updatedDate: z.date().optional(),
         author: z.string().default('Technician'),
+        image: z.string().default(''), // Image URL or path (empty string if not provided)
+        youtubeUrl: z.string().optional(), // Optional YouTube video URL
     }),
 });
 

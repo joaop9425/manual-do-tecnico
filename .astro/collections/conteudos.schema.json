@@ -61,6 +61,13 @@
           "type": "string",
           "default": "Technician"
         },
+        "image": {
+          "type": "string",
+          "default": ""
+        },
+        "youtubeUrl": {
+          "type": "string"
+        },
         "$schema": {
           "type": "string"
         }

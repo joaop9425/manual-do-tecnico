@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import YouTubeEmbed from "../../components/YouTubeEmbed.astro";
 
 export async function getStaticPaths() {
     const allContent = await getCollection("conteudos");
@@ -48,6 +49,9 @@ const { Content } = await entry.render();
             </div>
         </header>
 
+        <!-- YOUTUBE VIDEO (if available) -->
+        {entry.data.youtubeUrl && <YouTubeEmbed url={entry.data.youtubeUrl} />}
+
         <!-- DESCRIPTION BOX -->
         <div
             class="p-8 md:p-12 bg-white rounded-3xl border border-surface-200 mb-16 text-xl text-surface-600 leading-relaxed font-medium italic text-center"
@@ -80,12 +84,12 @@ const { Content } = await entry.render();
             >
                 &larr; Voltar para Protocolos
             </a>
-            <button
+            <!-- <button
                 onclick="window.print()"
                 class="px-6 py-3 bg-surface-50 text-surface-950 font-bold rounded-xl border border-surface-200 hover:bg-white transition-all text-xs uppercase tracking-widest"
             >
                 Imprimir Protocolo
-            </button>
+            </button> -->
         </footer>
     </article>
 </BaseLayout>
