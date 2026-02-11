@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsExplorer from "../../components/react/NewsExplorer";
+
+const allNews = await getCollection("noticias");
+const categories = [...new Set(allNews.map((n) => n.data.category))].sort();
+const sortedNews = allNews.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+
+<BaseLayout
+    title="Feed de Notícias TI & Hardware :: Manual do Técnico"
+    description="Fique por dentro das últimas notícias sobre hardware, software, cibersegurança e tendências do mercado de tecnologia. Feed atualizado em tempo real. Acompanhe os principais portais em um só lugar."
+>
+    <!-- HERO SECTION -->
+    <header class="mb-12">
+        <h1
+            class="text-4xl md:text-6xl font-bold text-surface-950 tracking-tight font-display mb-6"
+        >
+            Feed de Notícias
+        </h1>
+        <p class="text-lg text-surface-600 max-w-2xl leading-relaxed">
+            Nossa curadoria técnica traz as informações mais relevantes do
+            ecossistema de TI, agregadas e filtradas para manter você atualizado
+            com o que realmente importa.
+        </p>
+    </header>
+
+    <!-- REACT EXPLORER -->
+    <NewsExplorer
+        client:load
+        initialNews={sortedNews}
+        availableCategories={categories}
+    />
+</BaseLayout>

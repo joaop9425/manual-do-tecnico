@@ -1,0 +1,50 @@
+---
+interface Props {
+    url: string;
+}
+
+const { url } = Astro.props;
+
+// Extract YouTube video ID from various URL formats
+function getYouTubeVideoId(url: string): string | null {
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+        /youtube\.com\/embed\/([^&\n?#]+)/,
+    ];
+
+    for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) {
+            return match[1];
+        }
+    }
+
+    return null;
+}
+
+const videoId = getYouTubeVideoId(url);
+---
+
+{
+    videoId ? (
+        <div class="youtube-embed-container mb-16">
+            <div class="relative w-full rounded-3xl overflow-hidden border border-surface-200 shadow-lg bg-surface-950">
+                <div class="aspect-video">
+                    <iframe
+                        src={`https://www.youtube.com/embed/${videoId}`}
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        class="absolute top-0 left-0 w-full h-full"
+                    />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="mb-16 p-6 bg-yellow-50 border border-yellow-200 rounded-2xl text-yellow-800 text-sm">
+            <strong>⚠️ URL do YouTube inválida:</strong> Não foi possível
+            extrair o ID do vídeo.
+        </div>
+    )
+}

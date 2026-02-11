@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PsuCalculator from "../components/tools/PsuCalculator";
+---
+
+<BaseLayout title="Ferramentas :: Manual do Técnico">
+    <div class="mb-20 text-center">
+        <h1
+            class="text-4xl md:text-5xl font-bold text-surface-950 tracking-tight mb-4"
+        >
+            Ferramentas de Diagnóstico
+        </h1>
+        <p class="text-surface-600 text-lg max-w-xl mx-auto leading-relaxed">
+            Utilitários interativos para auxiliar em cálculos técnicos e
+            verificações rápidas de hardware.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- PSU CALCULATOR ISLAND -->
+        <div class="space-y-6">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-white"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-surface-950">
+                        Calculadora de PSU
+                    </h2>
+                    <p class="text-sm text-surface-500">
+                        Estime a potência necessária para seu setup.
+                    </p>
+                </div>
+            </div>
+            <PsuCalculator client:load />
+        </div>
+
+        <!-- PLACEHOLDER TOOL -->
+        <div
+            class="bg-white rounded-3xl border border-dashed border-surface-300 p-12 flex flex-col items-center justify-center text-center space-y-4"
+        >
+            <div
+                class="w-16 h-16 bg-surface-50 rounded-full flex items-center justify-center text-surface-300"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-8 h-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+            </div>
+            <div>
+                <h3 class="font-bold text-xl text-surface-400">Em Breve</h3>
+                <p class="text-sm text-surface-400 max-w-[200px] mt-2">
+                    Estamos desenvolvendo novas ferramentas como Decodificador
+                    de Beeps e Identificador de Pinout.
+                </p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>

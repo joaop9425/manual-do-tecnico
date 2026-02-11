@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const allContent = await getCollection("conteudos");
+    const categories = [
+        ...new Set(allContent.map((post) => post.data.category)),
+    ];
+
+    return categories.map((category) => ({
+        params: { category },
+        props: {
+            category,
+            posts: allContent.filter((post) => post.data.category === category),
+        },
+    }));
+}
+
+const { category, posts } = Astro.props as { category: string; posts: any[] };
+const sortedPosts = posts.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+
+<BaseLayout title={`Conteúdos :: ${category.toUpperCase()}`}>
+    <div class="mb-16">
+        <div
+            class="text-xs font-bold text-brand-600 uppercase tracking-widest mb-4"
+        >
+            <a href="/conteudos" class="hover:underline">Seções</a> / Categoria
+        </div>
+        <h1
+            class="text-4xl md:text-5xl font-bold text-surface-950 tracking-tight"
+        >
+            Protocolos de {category.charAt(0).toUpperCase() + category.slice(1)}
+        </h1>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+        {
+            posts.map((content) => (
+                <article class="group">
+                    <a
+                        href={`/conteudos/${content.slug}`}
+                        class="block space-y-4"
+                        target="_blank"
+                    >
+                        <div class="aspect-[16/9] bg-surface-100 rounded-2xl overflow-hidden mb-6 border border-surface-200 group-hover:shadow-premium transition-all duration-300">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-50 to-transparent flex items-center justify-center">
+                                <span class="text-xs font-bold uppercase tracking-widest text-brand-600 opacity-40">
+                                    {content.data.category}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <h2 class="text-2xl font-bold text-surface-950 group-hover:text-brand-500 transition-colors leading-snug">
+                                {content.data.title}
+                            </h2>
+                            <p class="text-surface-500 leading-relaxed line-clamp-2">
+                                {content.data.description}
+                            </p>
+                        </div>
+                    </a>
+                </article>
+            ))
+        }
+    </div>
+</BaseLayout>
