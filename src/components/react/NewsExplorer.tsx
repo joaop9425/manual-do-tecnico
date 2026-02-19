@@ -24,9 +24,11 @@ interface Props {
 export default function NewsExplorer({ initialNews, availableCategories, base = '' }: Props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 12;
 
     const filteredNews = useMemo(() => {
-        return initialNews.filter((item) => {
+        const result = initialNews.filter((item) => {
             const matchesSearch =
                 item.data.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 item.data.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -35,7 +37,25 @@ export default function NewsExplorer({ initialNews, availableCategories, base = 
 
             return matchesSearch && matchesCategory;
         });
+        return result;
     }, [searchTerm, selectedCategory, initialNews]);
+
+    // Reset page to 1 when filters change
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, selectedCategory]);
+
+    const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE);
+
+    const paginatedNews = useMemo(() => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        return filteredNews.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    }, [filteredNews, currentPage]);
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+    };
 
     return (
         <div className="space-y-12">
@@ -90,7 +110,7 @@ export default function NewsExplorer({ initialNews, availableCategories, base = 
 
             {/* GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-10">
-                {filteredNews.map((item) => (
+                {paginatedNews.map((item) => (
                     <article
                         key={item.id}
                         className="group flex flex-col bg-white rounded-3xl border border-surface-200 overflow-hidden hover:border-brand-200 hover:shadow-2xl hover:shadow-brand-500/5 transition-all duration-500"
@@ -134,6 +154,59 @@ export default function NewsExplorer({ initialNews, availableCategories, base = 
                     </article>
                 ))}
             </div>
+
+            {/* PAGINATION CONTROLS */}
+            {totalPages > 1 && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-12 border-t border-surface-200">
+                    <div className="text-sm font-medium text-surface-500 order-2 sm:order-1">
+                        Página <span className="text-surface-950 font-bold">{currentPage}</span> de <span className="text-surface-950 font-bold">{totalPages}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 order-1 sm:order-2">
+                        <button
+                            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
+                            className="p-2.5 rounded-xl border border-surface-200 bg-white text-surface-600 hover:border-brand-500 hover:text-brand-500 disabled:opacity-30 disabled:hover:border-surface-200 disabled:hover:text-surface-600 transition-all shadow-sm"
+                            aria-label="Página anterior"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+                        </button>
+
+                        <div className="flex items-center gap-1">
+                            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                // Logic to show pages around current
+                                let pageNum = 1;
+                                if (totalPages <= 5) pageNum = i + 1;
+                                else if (currentPage <= 3) pageNum = i + 1;
+                                else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+                                else pageNum = currentPage - 2 + i;
+
+                                return (
+                                    <button
+                                        key={pageNum}
+                                        onClick={() => handlePageChange(pageNum)}
+                                        className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${currentPage === pageNum
+                                            ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
+                                            : 'bg-white border border-surface-200 text-surface-600 hover:border-brand-200'
+                                            }`}
+                                    >
+                                        {pageNum}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        <button
+                            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                            disabled={currentPage === totalPages}
+                            className="p-2.5 rounded-xl border border-surface-200 bg-white text-surface-600 hover:border-brand-500 hover:text-brand-500 disabled:opacity-30 disabled:hover:border-surface-200 disabled:hover:text-surface-600 transition-all shadow-sm"
+                            aria-label="Próxima página"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* EMPTY STATE */}
             {filteredNews.length === 0 && (
