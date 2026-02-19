@@ -151,19 +151,22 @@ async function fetchFeed(feedConfig) {
         .replace(/"/g, '\\"')
         .trim() + '...';
 
-      const frontmatter = `---
-title: "${displayTitle.replace(/"/g, '\\"')}"
-source: "${feedConfig.name}"
-sourceUrl: "${item.link}"
+const frontmatter = `---
+title: ${JSON.stringify(displayTitle)}
+source: ${JSON.stringify(feedConfig.name)}
+sourceUrl: ${JSON.stringify(item.link)}
 pubDate: ${pubDate.toISOString().split('T')[0]}
-category: "${category}"
-revision: "${revision}"
+category: ${JSON.stringify(category)}
+revision: ${JSON.stringify(revision)}
 tags: ${JSON.stringify(tags)}
-excerpt: "${excerpt}"
+excerpt: |
+  ${excerpt}
+
 ---
 
 Esta é uma agregação automática. Para ler o conteúdo completo, acesse a fonte original: [${feedConfig.name}](${item.link})
 `;
+
 
       fs.writeFileSync(filePath, frontmatter);
       existingUrls.add(item.link);
@@ -182,3 +185,4 @@ async function main() {
 }
 
 main();
+
