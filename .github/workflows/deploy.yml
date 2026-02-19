@@ -3,16 +3,18 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ "main" ]
-  # Permite rodar manualmente pela aba Actions do GitHub
+
+  # A cada 6 horas (UTC)
+  schedule:
+    - cron: "0 */6 * * *"
+
   workflow_dispatch:
 
-# Permissões necessárias para o deploy no GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Garante que apenas um deploy ocorra por vez
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -21,6 +23,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,6 +58,14 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      # 🔥 Garante que a pasta base exista
+      - name: Ensure content directory exists
+        run: mkdir -p src/content/noticias
+
+      # 🔥 Roda o teu ingest
+      - name: Run RSS ingest
+        run: node scripts/ingest-rss.js
+
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build
@@ -71,6 +82,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
