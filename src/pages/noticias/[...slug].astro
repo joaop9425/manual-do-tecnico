@@ -46,6 +46,19 @@ const base = import.meta.env.BASE_URL;
                 prose-p:text-surface-600 prose-p:leading-relaxed
                 prose-a:text-brand-500 prose-a:font-semibold"
         >
+            {
+                entry.data.excerpt && (
+                    <div class="relative p-8 md:p-12 bg-white rounded-[2.5rem] border border-surface-200 shadow-premium overflow-hidden group">
+                        <div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-50/50 rounded-full group-hover:scale-110 transition-transform duration-700" />
+                        <div class="relative z-10 flex flex-col items-center text-center">
+                            <div class="w-12 h-1 bg-brand-500 rounded-full mb-8" />
+                            <p class="text-xl md:text-2xl text-surface-800 font-medium leading-relaxed italic font-display">
+                                "{entry.data.excerpt}"
+                            </p>
+                        </div>
+                    </div>
+                )
+            }
             <div
                 class="bg-surface-50 border border-surface-200 rounded-2xl p-6 md:p-8 mb-10"
             >
@@ -53,30 +66,30 @@ const base = import.meta.env.BASE_URL;
             </div>
         </div>
 
-        <div class="mt-12 text-center">
-            {entry.data.excerpt}
-            <a
-                href={entry.data.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 text-white font-bold rounded-xl hover:bg-brand-600 transition-all shadow-clean"
-            >
-                Ler Artigo Completo na Fonte
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+        <div class="mt-16 space-y-12">
+            <div class="text-center pt-4">
+                <a
+                    href={entry.data.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-3 px-10 py-5 bg-surface-950 text-white font-bold rounded-2xl hover:bg-brand-600 hover:-translate-y-1 transition-all shadow-xl shadow-surface-950/20 group"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </a>
+                    <span>Ler Artigo Completo na Fonte</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.5"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
     </article>
 </BaseLayout>
-

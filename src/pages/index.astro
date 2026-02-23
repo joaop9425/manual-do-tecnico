@@ -7,7 +7,9 @@ const latestNews = (await getCollection("noticias"))
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
     .slice(0, 5);
 
-const featuredContent = (await getCollection("conteudos")).slice(0, 6);
+const featuredContent = (await getCollection("conteudos"))
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+    .slice(0, 6);
 const base = import.meta.env.BASE_URL;
 ---
 
