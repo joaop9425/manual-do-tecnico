@@ -126,7 +126,7 @@ export default function NewsExplorer({ initialNews, availableCategories, base = 
                                     </span>
                                 </div>
                                 <time className="text-[10px] font-bold text-surface-400 uppercase tracking-widest">
-                                    {new Date(item.data.pubDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+                                    {new Date(item.data.pubDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', timeZone: 'UTC' })}
                                 </time>
                             </div>
 

@@ -62,7 +62,8 @@ const base = import.meta.env.BASE_URL;
                                 {item.data.pubDate.toLocaleDateString("pt-BR", {
                                     day: '2-digit',
                                     month: 'short',
-                                    year: 'numeric'
+                                    year: 'numeric',
+                                    timeZone: 'UTC'
                                 })}
                             </time>
                         </div>
