@@ -6,7 +6,6 @@ tags: ["macbook", "repair", "OCLP"]
 publishDate: 2026-02-25
 author: "João Paulo Neves"
 image: "https://dortania.github.io/OpenCore-Legacy-Patcher/homepage.png"
-link: https://mrmacintosh.com/how-to-fix-the-recovery-server-could-not-be-contacted-error-high-sierra-recovery-is-still-online-but-broken/
 ---
 
 # OCLP
