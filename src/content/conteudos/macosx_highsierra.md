@@ -1,7 +1,7 @@
 ---
 title: "Recuperando o sistema de um macbook antigo"
 description: "colocando mais uma sobrevida no maczinho antigo"
-category: "macbook"
+category: "software"
 tags: ["macbook", "repair", "OCLP"]
 publishDate: 2026-02-25
 author: "João Paulo Neves"
